@@ -1,7 +1,7 @@
 #### Preamble ####
 # Purpose: Simulates the number of fire incidents in Toronto each month in 2022
 # Author: Jimmy Luc
-# Date: 17 January 2024
+# Date: 21 January 2024
 # Contact: jimmy.luc@mail.utoronto.ca
 
 #### Workspace setup ####

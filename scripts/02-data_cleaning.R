@@ -1,7 +1,7 @@
 #### Preamble ####
 # Purpose: Cleans the raw fire incident data from opendatatoronto r package
 # Author: Jimmy Luc
-# Date: 17 January 2024
+# Date: 21 January 2024
 # Contact: jimmy.luc@mail.utoronto.ca
 # Pre-requisites: Execute 01-download_data.R prior to running this file
 
@@ -23,11 +23,6 @@ cleaned_fire_incidents_data <-
     tfs_alarm_time
     )
 
-# filter data in the year of 2022
-cleaned_fire_incidents_data <- 
-  cleaned_fire_incidents_data[format(cleaned_fire_incidents_data$tfs_alarm_time,
-                                     "%Y") == "2022", ]
-
 # reorder data in descending order
 cleaned_fire_incidents_data <- cleaned_fire_incidents_data[order(
   as.Date(cleaned_fire_incidents_data$tfs_alarm_time, format="%Y/%m/%d")
@@ -36,5 +31,6 @@ cleaned_fire_incidents_data <- cleaned_fire_incidents_data[order(
 #### Save data ####
 write_csv(
   cleaned_fire_incidents_data,
-  "outputs/data/cleaned_fire_incidents_data.csv"
+  "inputs/data/cleaned_fire_incidents_data.csv"
 )
+

@@ -1,7 +1,7 @@
 #### Preamble ####
 # Purpose: Downloads and saves the data from the opendatatoronto r package
 # Author: Jimmy Luc
-# Date: 17 January 2024
+# Date: 21 January 2024
 # Contact: jimmy.luc@mail.utoronto.ca
 
 #### Workspace setup ####
@@ -28,3 +28,4 @@ write_csv(
   raw_fire_incidents_data,
   "inputs/data/toronto_fire_incidents.csv"
 )
+
