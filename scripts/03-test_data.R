@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Tests the cleaned dataset's types and values.
+# Purpose: Tests the cleaned datasets types and values
 # Author: Jimmy Luc
 # Date: 21 January 2024
 # Contact: jimmy.luc@mail.utoronto.ca
