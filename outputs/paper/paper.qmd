@@ -1,221 +1,230 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Visualize Fire: An Analysis of Monthly Fire Incidents in Toronto Pre- and Post-COVID-19"
 author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: LINK."
+  - Jimmy Luc
+thanks: "Code and data are available at: https://github.com/rex009x/toronto_fire_incidents."
 date: today
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
-format: pdf
+abstract: "In addition to the COVID-19 pandemic, a surge in fire incidents across the city of Toronto became a more pressing concern. Confined within your homes to ensure safety through isolation, the looming threat of household fires increases. Whether it be a measly kitchen fire to apartment evacuation-level threats, this analysis aims to contextualize data into narratives that can be absorbed and develop valuable insights. With data observation and analysis, a more compelling story will be discovered which will shed light on the broader events occurring in the world beyond the raw numbers."
+format:
+  pdf:
+    fig-pos: "H"
+toc: true
 number-sections: true
 bibliography: references.bib
 ---
 
 ```{r}
-#| include: false
 #| warning: false
 #| message: false
+#| echo: false
 
-library(tidyverse)
-library(palmerpenguins)
+#### Workspace set-up ####
+library("tidyverse")
+library("dplyr")
+library("lubridate")
+library("here")
+
+#### Read in the data ####
+cleaned_fire_incidents_data <-
+  read_csv(
+    file = here("inputs/data/cleaned_fire_incidents_data.csv"),
+    show_col_types = FALSE
+  )
 ```
-
 
 # Introduction
 
-You can and should cross-reference sections and sub-sections. 
+The unprecedented coronavirus disease (COVID-19) flipped the world as we knew it upside down. The World Health Organization (WHO) announced a Public Health Emergency of International Concern (PHEIC) on January 30, 2020 and later classified the outbreak as a pandemic on March 11, 2020 [@citeCovidOverview]. Pursuing my undergraduate degree in Computer Science, shortly after completing my first fall semester and moving into the new year of 2020, little did I know that not only my post-secondary experience would be impacted but every aspect of life for myself and those around me. Being an introvert myself, the advised self-isolation in combination with online school was a welcomed change despite the chaos that ensued globally.
 
-The remainder of this paper is structured as follows. @sec-data....
+While the pandemic changed many thing for better or worse, fire incidents in particular have been on the constant rise since the beginning of the outbreak. Of course there could be many variables that could contribute to this increase but at the center of it all is the coronavirus which impacted everyone. Fire stations themselves were dealing with the effects of COVID-19 as they too are not impervious to its exposure [@citeTorontoSun]. A major shift in people's daily activities during the period of the COVID-19 lockdown left many sectors of society fragmented. Whether it be in-person to remote work environments, or in-class lectures to Zoom meetings, the threat of fire incidents happen to be one of many aspects of life that was impacted.
 
-
-
-# Data {#sec-data}
-
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
-
-```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
-#| echo: false
-
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
-```
-
-Talk more about it.
-
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
-
-```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
-#| echo: false
-#| warning: false
-#| message: false
-
-analysis_data <- read_csv(here::here("outputs/data/analysis_data.csv"))
-
-analysis_data |> 
-  ggplot(aes(x = width, y = length)) +
-  geom_point(alpha = 0.8) +
-  theme_minimal() +
-  labs(x = "Wing width (mm)",
-       y = "Wing length (mm)")
-```
-
-Talk way more about it. 
-
-
-
-# Model
-
-The goal of our modelling strategy is twofold. Firstly,...
-
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
-
-## Model set-up
-
-Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.  
-
-\begin{align} 
-y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_i + \gamma_i\\
-\alpha &\sim \mbox{Normal}(0, 2.5) \\
-\beta &\sim \mbox{Normal}(0, 2.5) \\
-\gamma &\sim \mbox{Normal}(0, 2.5) \\
-\sigma &\sim \mbox{Exponential}(1)
-\end{align}
-
-We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
-
-
-### Model justification
-
-We expect a positive relationship between the size of the wings and time spent aloft. In particular...
-
-We can use maths by including latex between dollar signs, for instance $\theta$.
-
-
-# Results
-
-Our results are summarized in @tbl-modelresults.
-
-```{r}
-#| echo: false
-#| eval: true
-#| warning: false
-#| message: false
-
-library(rstanarm)
-
-first_model <-
-  readRDS(file = here::here("outputs/models/first_model.rds"))
-```
-
-```{r}
-#| echo: false
-#| eval: true
-#| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
-#| warning: false
-
-modelsummary::modelsummary(
-  list(
-    "First model" = first_model
-  ),
-  statistic = "mad",
-  fmt = 2
-)
-```
-
-
-
-
-# Discussion
-
-## First discussion point {#sec-first-point}
-
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
-
-## Second discussion point
-
-## Third discussion point
-
-## Weaknesses and next steps
-
-Weaknesses and next steps should also be included.
+This analysis aims to uncover the nuances of the data analysis process itself with Toronto Fire Incident data, annual reports for Toronto Fire Services (TFS), and Statistics Canada. This paper will visualize the number of monthly fire incidents pre- and post-COVID-19 to extrapolate the differences in relation to the real world events occurring during those periods of time. Additionally, find whether or not there exists a correlation between fire incidents that occur and spending more time at home. A graph from Statistics Canada published in June 8, 2023 depicts the increase and decrease of various types of fire incidents in Canada was included as support. Although my findings show an increase in fire incident reports through `opendatatoronto` [@citeOpenDataToronto] datasets, the narrative behind the data itself is not present which is a objective I tackle throughout this paper.
 
 \newpage
 
-\appendix
+# Data
 
-# Appendix {-}
+In this section I will be diving deeper into the various modes of `R`-based data collection and generation. The data used in this paper is retrieved from the `opendatatoronto` R package [@citeOpenDataToronto], namely, the Toronto fire incidents dataset. Other R packages including functionalities from `tidyverse` [@citeTidyverse], `janitor` [@citeJanitor], `here` [@citeHere], `readr` [@citeReadr], `ggplot2` [@citeGgplot2], and `dplyr` [@citeDplyr]. Greater detail concerning the utilization of the mentioned packages will be further explained in the following subsections.
 
+## Data Collection
 
-# Additional data details
+All data used to generate the visualizations in this paper is through the City of Toronto’s Open Data Portal which is an open source tool designed to be publicly available and encourage the development of valuable insights. Specifically, concerning ourselves with the Toronto's Fire Incidents dataset. A noteworthy caveat to this data is that it is defined by the Ontario Fire Marshal (OFM) up to December 31, 2022. Furthermore, fire incidents that may include incomplete data may be currently unavailable due to an undergoing investigation or is identified as a "no loss outdoor fire" [@citeTorontoFireIncidents].
 
-# Model details {#sec-model-details}
+## Variables of Interest
 
-## Posterior predictive check
+While the data includes fruitful information, it is limited to a degree in order to preserve the privacy and respect of those affected. This analysis largely concerns itself with the Toronto Fire Services (TFS) alarm time which dates the exact timestamp the TFS was notified of the particular incident.
 
-In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
+## Data Processing
 
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
+In order to generate our required visualizations, processing the initial data retrieved is the first step. With the aid of `tidyverse` [@citeTidyverse], `janitor` [@citeJanitor], `here` [@citeHere], and `dplyr` [@citeDplyr], are able to retrieve, clean, and isolate the data to acquire our variables of interest.
+
+Now with our cleaned data saved into our local directory as a .csv file, we proceed with filtering our data to our desire. Since our data is revolved around timestamps, with the data being a date, namely, a Date object, I can filter incidents that occur at any given time within the bounds of the data elements themselves and find the collective amount of incidents. If I wish to analyze the number of fire incidents that have occurred during Canada Day, I can filter the data for incidents on the first day of July and find exactly how many the TFS received. Knowing this, I can further isolate the variable of interest to acquire the data of interest.
+
+\newpage
+
+# Results
+
+This analysis takes a look at how the coronavirus pandemic has impacted fire incidents in Toronto, Canada. As the World Health Organization announced the state of the outbreak as a pandemic on March 11, 2020, we can interpret all of 2020 as the year COVID-19 began. Marking the preceding and proceeding years as pre- and post-COVID-19 respectively. As the data encapsulated incidents up to the end of 2022, we can set the bounds of our analysis plus or minus two years from 2020. When observing these graphs, we are seeking whether or not there is change in the number of incidents per year in addition to any visible trends.
+
+## Fire Incidents During the Pandemic
+
+Taking a look at @fig-cleaned_fire_incidents_20, we find that fire incidents occur the most during the summer months of the year 2020 which we can infer is due to the warmer temperatures. We can expect the following months in later years to ave increased fire incidents due to major socioeconomic shifts in workplace environments, self-isolation, etc.
 
 ```{r}
-#| eval: true
+#| label: fig-cleaned_fire_incidents_20
+#| fig-cap: Fire incidents in Toronto per month in 2020
 #| echo: false
 #| message: false
 #| warning: false
-#| label: fig-ppcheckandposteriorvsprior
-#| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-#| fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
 
-pp_check(first_model) +
-  theme_classic() +
-  theme(legend.position = "bottom")
+cleaned_fire_incidents_data_2020 <-
+  cleaned_fire_incidents_data %>%
+    filter(year(tfs_alarm_time) == year("2020/1/1"))
 
-posterior_vs_prior(first_model) +
-  theme_minimal() +
-  scale_color_brewer(palette = "Set1") +
-  theme(legend.position = "bottom") +
-  coord_flip()
+# with the aid of https://stackoverflow.com/q/76848343 to format as mm/yyyy
+cleaned_fire_incidents_data_2020$tfs_alarm_time <-
+  as.factor(
+    paste(
+      cleaned_fire_incidents_data_2020$tfs_alarm_time |> month(),
+      cleaned_fire_incidents_data_2020$tfs_alarm_time |> year(),
+      sep="/"
+      )
+    )
+  
+cleaned_fire_incidents_data_2020 |>
+  ggplot(aes(factor(tfs_alarm_time, levels = unique(tfs_alarm_time)), fill = tfs_alarm_time)) +
+  geom_bar() +
+  guides(fill="none") +
+  labs(x = "Date", y = "Number of Incidents") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-## Diagnostics
-
-@fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
-
-@fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
-
+Combining our observations from @fig-cleaned_fire_incidents_20 and predictions, taking a look at @fig-cleaned_fire_incidents_21 and @fig-cleaned_fire_incidents_22, we begin to see some changes in the number of fire incidents throughout the year. Specifically, in @fig-cleaned_fire_incidents_21 the results begin to stagnate, but our observation holds true with summer months being the most common for fire incidents to occur. Switching over to @fig-cleaned_fire_incidents_22, the year of 2022 appears more similarly to 2020 in regards to the number of fire incidents. As COVID-19 restrictions become lifted mid-February to early March [@citeCovidReopening], in addition to the public longing to return back to a their workplaces and the outdoors, together this may relate to their similar results.
 ```{r}
+#| label: fig-cleaned_fire_incidents_21
+#| fig-cap: Fire incidents in Toronto per month in 2021
 #| echo: false
-#| eval: true
 #| message: false
 #| warning: false
-#| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
-#| layout-ncol: 2
 
-plot(first_model, "trace")
+cleaned_fire_incidents_data_2021 <-
+  cleaned_fire_incidents_data %>%
+    filter(year(tfs_alarm_time) == year("2021/1/1"))
 
-plot(first_model, "rhat")
+cleaned_fire_incidents_data_2021$tfs_alarm_time <-
+  as.factor(
+    paste(
+      cleaned_fire_incidents_data_2021$tfs_alarm_time |> month(),
+      cleaned_fire_incidents_data_2021$tfs_alarm_time |> year(),
+      sep="/"
+      )
+    )
+  
+cleaned_fire_incidents_data_2021 |>
+  ggplot(aes(factor(tfs_alarm_time, levels = unique(tfs_alarm_time)), fill = tfs_alarm_time)) +
+  geom_bar() +
+  guides(fill="none") +
+  labs(x = "Date", y = "Number of Incidents") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
+```{r}
+#| label: fig-cleaned_fire_incidents_22
+#| fig-cap: Fire incidents in Toronto per month in 2022
+#| echo: false
+#| message: false
+#| warning: false
 
+cleaned_fire_incidents_data_2022 <-
+  cleaned_fire_incidents_data %>%
+    filter(year(tfs_alarm_time) == year("2022/1/1"))
+
+cleaned_fire_incidents_data_2022$tfs_alarm_time <-
+  as.factor(
+    paste(
+      cleaned_fire_incidents_data_2022$tfs_alarm_time |> month(),
+      cleaned_fire_incidents_data_2022$tfs_alarm_time |> year(),
+      sep="/"
+      )
+    )
+  
+cleaned_fire_incidents_data_2022 |>
+  ggplot(aes(factor(tfs_alarm_time, levels = unique(tfs_alarm_time)), fill = tfs_alarm_time)) +
+  geom_bar() +
+  guides(fill="none") +
+  labs(x = "Date", y = "Number of Incidents") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Although our observations does not fully align with our initial predictions purely based off the data, during this time period, what actually happened in reality tells another story. Fire incidents across Canada have been on a constant rise since the pandemic with the number of fatalities rising from 148 in 2019 to 202 in 2021. It is also important to note that pre-COVID-19 the total number of fire incidents have been decreasing [@citeStatisticsCanada]. As this information is based off of data limited to 2021 and does not covered the entirety of the pandemic, the World Health Organization announced that COVID-19 would no longer be classified as a public health emergency of international concern (PHEIC) [@citeCovidMeeting]. While this announcement may or may not have affect governments around the world to alleviate coronavirus restrictions, it marks the end of the pandemic.
+
+## Fire Incidents Before the Pandemic
+
+As we have analyzed our findings concerning fire incidents during the pandemic, as we switching over to pre-COVID-19 the results may be anticlimactic at best. With @fig-cleaned_fire_incidents_18 and @fig-cleaned_fire_incidents_19 representing the number of fire incidents monthly for 2018 and 2019 respectively, the data appears nearly identical to the proceeding years. As previously mentioned, Statistics Canada stated that fire incidents have been on track to decreasing prior to the pandemic but purely based of the data available from `opendatatoronto`, there are not many inferences to be made in this regard.
+```{r}
+#| label: fig-cleaned_fire_incidents_18
+#| fig-cap: Fire incidents in Toronto per month in 2018
+#| echo: false
+#| message: false
+#| warning: false
+
+cleaned_fire_incidents_data_2018 <-
+  cleaned_fire_incidents_data %>%
+    filter(year(tfs_alarm_time) == year("2018/1/1"))
+
+cleaned_fire_incidents_data_2018$tfs_alarm_time <-
+  as.factor(
+    paste(
+      cleaned_fire_incidents_data_2018$tfs_alarm_time |> month(),
+      cleaned_fire_incidents_data_2018$tfs_alarm_time |> year(),
+      sep="/"
+      )
+    )
+  
+cleaned_fire_incidents_data_2018 |>
+  ggplot(aes(factor(tfs_alarm_time, levels = unique(tfs_alarm_time)), fill = tfs_alarm_time)) +
+  geom_bar() +
+  guides(fill="none") +
+  labs(x = "Date", y = "Number of Incidents") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+ 
+```{r}
+#| label: fig-cleaned_fire_incidents_19
+#| fig-cap: Fire incidents in Toronto per month in 2019
+#| echo: false
+#| message: false
+#| warning: false
+
+cleaned_fire_incidents_data_2019 <-
+  cleaned_fire_incidents_data %>%
+    filter(year(tfs_alarm_time) == year("2019/1/1"))
+
+cleaned_fire_incidents_data_2019$tfs_alarm_time <-
+  as.factor(
+    paste(
+      cleaned_fire_incidents_data_2019$tfs_alarm_time |> month(),
+      cleaned_fire_incidents_data_2019$tfs_alarm_time |> year(),
+      sep="/"
+      )
+    )
+  
+cleaned_fire_incidents_data_2019 |>
+  ggplot(aes(factor(tfs_alarm_time, levels = unique(tfs_alarm_time)), fill = tfs_alarm_time)) +
+  geom_bar() +
+  guides(fill="none") +
+  labs(x = "Date", y = "Number of Incidents") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+\newpage
+
+# Conclusion
+
+This paper challenges the connections between narratives perceived through data and real world events. While the data specifically analyzes Toronto, extending these observations to all of Canada can produce valuable insights. Regardless, whether or not fire incidents directly align with self-isolating at home and global pandemics, the bigger question is whether or not we can overcome challenges; from small-scale kitchen fires to the potential end of all humanity, data has the ability to write a story that connects the two together.
 
 \newpage
 
 
 # References
-
-
