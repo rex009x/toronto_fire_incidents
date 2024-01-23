@@ -45,7 +45,7 @@ This analysis aims to uncover the nuances of the data analysis process itself wi
 
 # Data
 
-In this section I will be diving deeper into the various modes of `R`-based data collection and generation. The data used in this paper is retrieved from the `opendatatoronto` R package [@citeOpenDataToronto], namely, the Toronto fire incidents dataset. Other R packages including functionalities from `tidyverse` [@citeTidyverse], `janitor` [@citeJanitor], `here` [@citeHere], `readr` [@citeReadr], `ggplot2` [@citeGgplot2], and `dplyr` [@citeDplyr]. Greater detail concerning the utilization of the mentioned packages will be further explained in the following subsections.
+In this section I will be diving deeper into the various modes of `R`-based [@citeR] data collection and generation within `RStudio` [@citeRStudio]. The data used in this paper is retrieved from the `opendatatoronto` R package [@citeOpenDataToronto], namely, the Toronto fire incidents dataset. Other R packages including functionalities from `tidyverse` [@citeTidyverse], `janitor` [@citeJanitor], `here` [@citeHere], `readr` [@citeReadr], `ggplot2` [@citeGgplot2], and `dplyr` [@citeDplyr]. Greater detail concerning the utilization of the mentioned packages will be further explained in the following subsections.
 
 ## Data Collection
 
@@ -96,7 +96,7 @@ cleaned_fire_incidents_data_2020 |>
   ggplot(aes(factor(tfs_alarm_time, levels = unique(tfs_alarm_time)), fill = tfs_alarm_time)) +
   geom_bar() +
   guides(fill="none") +
-  labs(x = "Date", y = "Number of Incidents") +
+  labs(x = "Date", y = "Number of Incidents", title = "Toronto Fire Incidents in 2020 per Month") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
@@ -125,7 +125,7 @@ cleaned_fire_incidents_data_2021 |>
   ggplot(aes(factor(tfs_alarm_time, levels = unique(tfs_alarm_time)), fill = tfs_alarm_time)) +
   geom_bar() +
   guides(fill="none") +
-  labs(x = "Date", y = "Number of Incidents") +
+  labs(x = "Date", y = "Number of Incidents", title = "Toronto Fire Incidents in 2021 per Month") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
@@ -153,7 +153,7 @@ cleaned_fire_incidents_data_2022 |>
   ggplot(aes(factor(tfs_alarm_time, levels = unique(tfs_alarm_time)), fill = tfs_alarm_time)) +
   geom_bar() +
   guides(fill="none") +
-  labs(x = "Date", y = "Number of Incidents") +
+  labs(x = "Date", y = "Number of Incidents", title = "Toronto Fire Incidents in 2022 per Month") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
@@ -186,7 +186,7 @@ cleaned_fire_incidents_data_2018 |>
   ggplot(aes(factor(tfs_alarm_time, levels = unique(tfs_alarm_time)), fill = tfs_alarm_time)) +
   geom_bar() +
   guides(fill="none") +
-  labs(x = "Date", y = "Number of Incidents") +
+  labs(x = "Date", y = "Number of Incidents", title = "Toronto Fire Incidents in 2018 per Month") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
  
@@ -214,11 +214,17 @@ cleaned_fire_incidents_data_2019 |>
   ggplot(aes(factor(tfs_alarm_time, levels = unique(tfs_alarm_time)), fill = tfs_alarm_time)) +
   geom_bar() +
   guides(fill="none") +
-  labs(x = "Date", y = "Number of Incidents") +
+  labs(x = "Date", y = "Number of Incidents", title = "Toronto Fire Incidents in 2019 per Month") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 \newpage
+
+# Discussion
+
+While the statistical findings of this paper may have left you feeling unsatisfied, or as if there is still a piece of the puzzle missing, then you too are fulfilling the the responsibilities of a data analyst. This paper acts as an example that data alone, at face value, does not tell the whole story of what is actually happening. While it is arguable that data can in fact reveal information that would go unnoticed, my paper intends to demonstrate that the reverse is also an argument to be reckoned with.
+
+Data has been a cornerstone in our world before any of us were brought here and is only becoming more present in our daily lives. Whether data is used for the betterment of society, or to simply tear it down, it is all the more important to develop an optimistic but critical approach when performing data analysis. In various sectors of society, it is imperative that we cherish and value interdisciplinary skills to a degree. We require multiple perspectives from people with different sorts of backgrounds, knowledge, and insights to produce a progressive society. Take this paper as the next step to thinking critically about data analysis, and more importantly information in a world abundant in misinformation.
 
 # Conclusion
 

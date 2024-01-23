@@ -1,7 +1,7 @@
 #### Preamble ####
 # Purpose: Cleans the raw fire incident data from opendatatoronto r package
 # Author: Jimmy Luc
-# Date: 21 January 2024
+# Date: 23 January 2024
 # Contact: jimmy.luc@mail.utoronto.ca
 # Pre-requisites: Execute 01-download_data.R prior to running this file
 
@@ -29,6 +29,7 @@ cleaned_fire_incidents_data <- cleaned_fire_incidents_data[order(
   ), ]
 
 #### Save data ####
+# write cleaned data as csv
 write_csv(
   cleaned_fire_incidents_data,
   "inputs/data/cleaned_fire_incidents_data.csv"

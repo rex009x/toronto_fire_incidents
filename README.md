@@ -10,6 +10,9 @@ In addition to the COVID-19 pandemic, a surge in fire incidents across the city 
 -   `scripts` contains the R scripts used to simulate, download, test, and clean data.
 ## How to Run
 
-1. Run `scripts/01-download_data.R`
-2. Run `scripts/02-data_cleaning.R`
-3. Run `output/paper/paper.qmd`
+1. Run `scripts/01-download_data.R`, this will retrieve the required data
+2. Run `scripts/02-data_cleaning.R`, clean and prepare the data before visualization
+3. Run `output/paper/paper.qmd`, executing this file will generate a pdf
+
+## LLM Usage
+No LLM or generative AI was used during the development of this paper.
